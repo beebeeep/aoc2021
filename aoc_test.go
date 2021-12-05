@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"testing"
 )
@@ -37,6 +38,15 @@ func Test_day4(t *testing.T) {
 		t.Error(err)
 	}
 	day4()
+}
+
+func Test_day5(t *testing.T) {
+	var err error
+	os.Stdin, err = os.Open("day5.test-in")
+	if err != nil {
+		t.Error(err)
+	}
+	fmt.Println(day5())
 }
 
 func Test_win(t *testing.T) {
