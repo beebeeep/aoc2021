@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os"
 	"testing"
 )
 
@@ -27,4 +28,49 @@ func Test__findByCriteria(t *testing.T) {
 		t.Error("wrong co2")
 	}
 
+}
+
+func Test_day4(t *testing.T) {
+	var err error
+	os.Stdin, err = os.Open("day4.in")
+	if err != nil {
+		t.Error(err)
+	}
+	day4()
+}
+
+func Test_win(t *testing.T) {
+	b := &board{
+		{{number: 0}, {number: 0}, {number: 0}, {number: 0}, {number: 0}},
+		{{number: 0}, {number: 0}, {number: 0}, {number: 0}, {number: 0}},
+		{{number: 1}, {number: 1}, {number: 1}, {number: 1}, {number: 1}},
+		{{number: 0}, {number: 0}, {number: 0}, {number: 0}, {number: 0}},
+		{{number: 0}, {number: 0}, {number: 0}, {number: 0}, {number: 0}},
+	}
+	mark([]*board{b}, 1)
+	if !win(b) {
+		t.Fail()
+	}
+	b = &board{
+		{{number: 0}, {number: 0}, {number: 1}, {number: 0}, {number: 0}},
+		{{number: 0}, {number: 0}, {number: 1}, {number: 0}, {number: 0}},
+		{{number: 0}, {number: 0}, {number: 1}, {number: 0}, {number: 0}},
+		{{number: 0}, {number: 0}, {number: 1}, {number: 0}, {number: 0}},
+		{{number: 0}, {number: 0}, {number: 1}, {number: 0}, {number: 0}},
+	}
+	mark([]*board{b}, 1)
+	if !win(b) {
+		t.Fail()
+	}
+	b = &board{
+		{{number: 0}, {number: 0}, {number: 0}, {number: 0}, {number: 0}},
+		{{number: 0}, {number: 0}, {number: 0}, {number: 0}, {number: 0}},
+		{{number: 0}, {number: 0}, {number: 0}, {number: 0}, {number: 0}},
+		{{number: 0}, {number: 0}, {number: 0}, {number: 0}, {number: 0}},
+		{{number: 0}, {number: 0}, {number: 0}, {number: 0}, {number: 0}},
+	}
+	mark([]*board{b}, 1)
+	if win(b) {
+		t.Fail()
+	}
 }
