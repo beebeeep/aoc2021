@@ -50,11 +50,18 @@ func Test_day5(t *testing.T) {
 }
 
 func Test_day6(t *testing.T) {
-	f := []uint8{3, 4, 3, 1, 2}
+	f := [9]uint64{0, 1, 1, 2, 1, 0, 0, 0, 0}
 	for i := 0; i < 18; i++ {
+		fmt.Printf("day %d, %v -> ", i, f)
 		ебитес(&f)
-		fmt.Println(i, f)
+		fmt.Println(f)
 	}
+	var count uint64
+	for i := range f {
+		count += f[i]
+	}
+	fmt.Println(count)
+
 }
 
 func Test_win(t *testing.T) {

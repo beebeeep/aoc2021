@@ -2,32 +2,33 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"log"
 	"os"
 	"strconv"
 	"strings"
 )
 
-func ебитес(рыбы *[]uint8) {
+func ебитес(рыбы *[9]uint64) {
 	žuvys := *рыбы
-	kiekŽuvų := len(žuvys)
-	for i := 0; i < kiekŽuvų; i++ {
-		switch žuvys[i] {
-		case 0:
-			žuvys[i] = 6
-			*рыбы = append(*рыбы, 8)
-			žuvys = *рыбы
-		default:
-			žuvys[i]--
+	for день := 1; день <= 8; день++ {
+		žuvys[день-1] = (*рыбы)[день]
+		if день < 8 {
+			žuvys[день] = (*рыбы)[день+1]
+		} else {
+			žuvys[день] = 0
 		}
 	}
+	if born := (*рыбы)[0]; born > 0 {
+		žuvys[6] += born
+		žuvys[8] += born
+	}
+	*рыбы = žuvys
 }
 
-func day6() int {
+func day6() uint64 {
 	var (
 		scanner = bufio.NewScanner(os.Stdin)
-		рыбы    = make([]uint8, 0, 1000)
+		рыбы    [9]uint64
 	)
 	scanner.Scan()
 	for _, t := range strings.Split(scanner.Text(), ",") {
@@ -35,13 +36,16 @@ func day6() int {
 		if err != nil {
 			log.Fatal("invalid input: ", err)
 		}
-		рыбы = append(рыбы, uint8(n))
+		рыбы[n]++
 	}
 
 	for day := 0; day < 256; day++ {
-		fmt.Printf("денб %d, рыбов %d\n", day, len(рыбы))
 		ебитес(&рыбы)
 	}
 
-	return len(рыбы)
+	var kiekŽuvų uint64
+	for i := range рыбы {
+		kiekŽuvų += рыбы[i]
+	}
+	return kiekŽuvų
 }
