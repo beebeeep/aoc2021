@@ -49,6 +49,14 @@ func Test_day5(t *testing.T) {
 	fmt.Println(day5())
 }
 
+func Test_day6(t *testing.T) {
+	f := []uint8{3, 4, 3, 1, 2}
+	for i := 0; i < 18; i++ {
+		ебитес(&f)
+		fmt.Println(i, f)
+	}
+}
+
 func Test_win(t *testing.T) {
 	b := &board{
 		{{number: 0}, {number: 0}, {number: 0}, {number: 0}, {number: 0}},
