@@ -64,6 +64,12 @@ func Test_day6(t *testing.T) {
 
 }
 
+func Test_isMatching(t *testing.T) {
+	patterns := []string{"acedgfb", "cdfbe", "gcdfa", "fbcad", "dab", "cefabd", "cdfgeb", "eafb", "cagedb", "ab"}
+	//patterns := []string{"abcefg", "cf", "adceg", "acdfg", "bdcf", "abdfg", "ebdefg", "acf", "abcdefg", "abcdfg"}
+	fmt.Println(guessPattern(patterns))
+}
+
 func Test_win(t *testing.T) {
 	b := &board{
 		{{number: 0}, {number: 0}, {number: 0}, {number: 0}, {number: 0}},
