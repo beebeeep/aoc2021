@@ -34,7 +34,3 @@ func day1() int {
 
 	return increased
 }
-
-func sum3(a [3]int) int {
-	return a[0] + a[1] + a[2]
-}

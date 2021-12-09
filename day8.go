@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"log"
 	"os"
-	"sort"
 	"strings"
 )
 
@@ -43,20 +42,6 @@ func guessPattern(patterns []string) map[string]int {
 	}
 
 	return result
-}
-
-func sortLetters(s string) string {
-	a := []rune(s)
-	sort.Slice(a, func(i, j int) bool { return a[i] < a[j] })
-	return string(a)
-}
-
-func str2map(s string) map[rune]bool {
-	r := make(map[rune]bool)
-	for _, c := range s {
-		r[c] = true
-	}
-	return r
 }
 
 func check069(s string, p1, p4, p7 map[rune]bool) int {

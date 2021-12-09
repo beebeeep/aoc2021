@@ -8,10 +8,6 @@ import (
 	"strings"
 )
 
-type point struct {
-	x, y int
-}
-
 func day5() int {
 	var (
 		scanner    = bufio.NewScanner(os.Stdin)
@@ -95,9 +91,9 @@ func getLinePoints(line [2]point) []point {
 	}
 	dx := (line[1].x - line[0].x) / l
 	dy := (line[1].y - line[0].y) / l
-	r := []point{{line[0].x, line[0].y}}
+	r := []point{{x: line[0].x, y: line[0].y}}
 	for i := 1; i <= l; i++ {
-		r = append(r, point{r[i-1].x + dx, r[i-1].y + dy})
+		r = append(r, point{x: r[i-1].x + dx, y: r[i-1].y + dy})
 	}
 	return r
 }
