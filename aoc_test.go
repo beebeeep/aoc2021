@@ -51,8 +51,8 @@ func Test_day5(t *testing.T) {
 
 func Test_day9(t *testing.T) {
 	var err error
-	//os.Stdin, err = os.Open("day9.test-in")
-	os.Stdin, err = os.Open("day9.in")
+	os.Stdin, err = os.Open("day9.test-in")
+	//os.Stdin, err = os.Open("day9.in")
 	if err != nil {
 		t.Error(err)
 	}
