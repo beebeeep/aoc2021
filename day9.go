@@ -120,7 +120,7 @@ func day9() int {
 		}
 		fmt.Println()
 	}
-	fmt.Println("\n\n")
+	fmt.Printf("\n\n")
 
 	basins := make([]*basin, 0, len(lowestPoints))
 	for _, p := range lowestPoints {

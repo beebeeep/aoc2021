@@ -59,6 +59,16 @@ func Test_day9(t *testing.T) {
 	fmt.Println(day9())
 }
 
+func Test_day10(t *testing.T) {
+	var err error
+	os.Stdin, err = os.Open("day10.test-in")
+	if err != nil {
+		t.Error(err)
+	}
+	fmt.Println()
+	fmt.Println(day10())
+}
+
 func Test_day6(t *testing.T) {
 	f := [9]uint64{0, 1, 1, 2, 1, 0, 0, 0, 0}
 	for i := 0; i < 18; i++ {
