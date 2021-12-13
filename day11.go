@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"time"
 )
 
 type dumbo struct {
@@ -93,6 +94,7 @@ func day11() int {
 		if allFlashed {
 			return i + 1
 		}
+		time.Sleep(100 * time.Millisecond)
 
 	}
 	return flashes
