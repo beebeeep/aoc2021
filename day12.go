@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"log"
 	"os"
 	"strings"
@@ -29,6 +28,29 @@ func countPaths(caves map[string]*cave, from, to string) (numPaths int) {
 }
 */
 
+func canVisit(caves map[string]*cave, cave string, path []string) bool {
+	if caves[cave].big {
+		return true
+	}
+	smallCaveVisits := make(map[string]int)
+	for _, c := range path {
+		if caves[c].big {
+			continue
+		}
+		smallCaveVisits[c]++
+	}
+	countTwice := 0
+	for _, v := range smallCaveVisits {
+		if v > 2 {
+			return false
+		}
+		if v == 2 {
+			countTwice++
+		}
+	}
+	return countTwice <= 1
+}
+
 func pathContains(path []string, cave string) bool {
 	for i := range path {
 		if path[i] == cave {
@@ -48,7 +70,7 @@ func findPaths(caves map[string]*cave, from, to string, path []string) [][]strin
 	path = append(path, from)
 	newPaths := make([][]string, 0)
 	for _, connection := range caves[from].connections {
-		if pathContains(path, connection) && !caves[connection].big {
+		if connection == "start" || !canVisit(caves, connection, path) {
 			continue
 		}
 
@@ -87,6 +109,6 @@ func day12() int {
 		caves[connection].connections = append(caves[connection].connections, name)
 	}
 	possiblePaths := findPaths(caves, "start", "end", nil)
-	fmt.Println(possiblePaths)
+	//fmt.Println(possiblePaths)
 	return len(possiblePaths)
 }
