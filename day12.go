@@ -12,22 +12,6 @@ type cave struct {
 	big         bool
 }
 
-/*
-func countPaths(caves map[string]*cave, from, to string) (numPaths int) {
-	if from == to {
-		return 1
-	}
-	caves[from].visited = true
-	for _, connection := range caves[from].connections {
-		if !caves[connection].visited || caves[connection].big {
-			fmt.Printf("going %s -> %s\n", from, connection)
-			numPaths += countPaths(caves, connection, to)
-		}
-	}
-	return numPaths
-}
-*/
-
 func canVisit(caves map[string]*cave, cave string, path []string) bool {
 	if caves[cave].big {
 		return true

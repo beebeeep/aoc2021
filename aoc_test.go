@@ -74,6 +74,15 @@ func Test_day12(t *testing.T) {
 	}
 	fmt.Println(day12())
 }
+
+func Test_day13(t *testing.T) {
+	var err error
+	os.Stdin, err = os.Open("day13.test-in")
+	if err != nil {
+		t.Error(err)
+	}
+	fmt.Println(day13())
+}
 func Test_day10(t *testing.T) {
 	var err error
 	os.Stdin, err = os.Open("day10.test-in")
