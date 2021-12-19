@@ -158,3 +158,9 @@ func Test_win(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func Test__extendCave(t *testing.T) {
+	showPath(extendCave([][]int{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}), nil)
+	//fmt.Println(extendCave([][]int{{123}, {4, 5, 6}, {7, 8, 9}}))
+	//fmt.Println(extendCave([][]int{{8}}))
+}

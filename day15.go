@@ -8,36 +8,29 @@ import (
 
 type rambler struct {
 	path     []point
+	score    int
 	position point
 }
 
-func wasHere(path []point, x, y int) bool {
-	for _, p := range path {
-		if p.x == x && p.y == y {
-			return true
-		}
-	}
-	return false
-}
-func showPath(cave [][]int, path []point) {
+func extendCave(cave [][]int) [][]int {
+	result := make([][]int, len(cave)*5)
 	for y := range cave {
-		for x := range cave[y] {
-			if wasHere(path, x, y) {
-				fmt.Printf("\033[1m%d\033[0m", cave[y][x])
-			} else {
-				fmt.Printf("%d", cave[y][x])
+		for dy := 0; dy < 5; dy++ {
+			y1 := y + dy*len(cave)
+			result[y1] = make([]int, len(cave[y])*5)
+			for x := range cave[y] {
+				for dx := 0; dx < 5; dx++ {
+					x1 := x + dx*len(cave[y])
+					result[y1][x1] = cave[y][x] + dx + dy
+					if result[y1][x1] > 9 {
+						result[y1][x1] = result[y1][x1] % 9
+					}
+
+				}
 			}
 		}
-		fmt.Printf("\n")
 	}
-}
-
-func getPathCost(p []point) int {
-	cost := 0
-	for _, c := range p[1:] {
-		cost += c.value
-	}
-	return cost
+	return result
 }
 
 func day15() int {
@@ -51,29 +44,21 @@ func day15() int {
 		cave = append(cave, r)
 	}
 
+	cave = extendCave(cave)
 	startPoint := point{x: 0, y: 0, value: cave[0][0]}
-	visitedPoints := map[point]bool{
-		startPoint: true,
+	visitedPoints := map[point]int{
+		startPoint: cave[0][0],
 	}
-
 	ramblers := map[string]*rambler{
 		"rambler-0": {path: []point{startPoint}, position: startPoint},
 	}
-	step := 0
 	ramblerCount := 0
-	paths := make([][]point, 0)
 	endX := len(cave[0]) - 1
 	endY := len(cave) - 1
-RAMBLE:
 	for {
-		step++
-		if len(ramblers) == 0 {
-			break RAMBLE
-		}
 		for name, r := range ramblers {
 			if r.position.x == endX && r.position.y == endY {
-				paths = append(paths, r.path)
-				delete(ramblers, name)
+				return r.score
 			}
 			r.position.value--
 			if r.position.value > 0 {
@@ -86,13 +71,14 @@ RAMBLE:
 					continue
 				}
 				p := point{x: x, y: y, value: cave[y][x]}
-				if visitedPoints[p] {
+				if v, ok := visitedPoints[p]; ok && v <= r.score+p.value {
 					continue
 				}
-				visitedPoints[p] = true
+				visitedPoints[p] = r.score + p.value
 				newRambler := &rambler{
 					path:     make([]point, len(r.path)+1),
 					position: p,
+					score:    p.value + r.score,
 				}
 				copy(newRambler.path, r.path)
 				newRambler.path = append(newRambler.path, p)
@@ -103,18 +89,4 @@ RAMBLE:
 			delete(ramblers, name)
 		}
 	}
-
-	minCost := 0
-
-	for i := range paths {
-		/*
-			showPath(cave, paths[i])
-			fmt.Println()
-		*/
-		if cost := getPathCost(paths[i]); minCost == 0 || cost < minCost {
-			minCost = cost
-		}
-	}
-	return minCost
-
 }
